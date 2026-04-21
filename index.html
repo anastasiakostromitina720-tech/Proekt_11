@@ -8,6 +8,1228 @@
     :root {
       --bg-1: #f3f7ff;
       --bg-2: #edfdf7;
+      --bg-3: #fef3ff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #4f46e5;
+      --accent-2: #0ea5e9;
+      --card: rgba(255, 255, 255, 0.82);
+      --border: rgba(255, 255, 255, 0.6);
+      --item-bg: rgba(255, 255, 255, 0.78);
+      --item-border: rgba(148, 163, 184, 0.25);
+      --toggle-bg: rgba(15, 23, 42, 0.09);
+      --button-text: #ffffff;
+    }
+
+    body.theme-dark {
+      --bg-1: #0b1223;
+      --bg-2: #0f172a;
+      --bg-3: #1a1a3a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #818cf8;
+      --accent-2: #22d3ee;
+      --card: rgba(15, 23, 42, 0.75);
+      --border: rgba(148, 163, 184, 0.26);
+      --item-bg: rgba(30, 41, 59, 0.75);
+      --item-border: rgba(148, 163, 184, 0.24);
+      --toggle-bg: rgba(148, 163, 184, 0.2);
+      --button-text: #ecfeff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(-45deg, var(--bg-1), var(--bg-3), var(--bg-2), #e0f2fe);
+      background-size: 300% 300%;
+      animation: gradientMove 16s ease infinite;
+      transition: color 0.35s ease, background 0.35s ease;
+    }
+
+    .container {
+      width: min(760px, 100%);
+      padding: 34px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.9s ease both;
+      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .theme-switch .icon { font-size: 15px; line-height: 1; transition: transform 0.25s ease, opacity 0.2s ease; }
+    .theme-switch .icon-moon { opacity: 0.55; }
+    body.theme-dark .theme-switch .icon-sun { opacity: 0.55; }
+    body.theme-dark .theme-switch .icon-moon { opacity: 1; transform: rotate(12deg) scale(1.06); }
+
+    .theme-switch input {
+      appearance: none;
+      width: 50px;
+      height: 30px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--toggle-bg);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      outline: none;
+    }
+
+    .theme-switch input::before {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      left: 4px;
+      top: 4px;
+      background: #fff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s ease;
+    }
+
+    .theme-switch input:checked { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .theme-switch input:checked::before { transform: translateX(20px); }
+
+    .subtitle { margin: 0 0 22px; font-size: 16px; color: var(--muted); }
+    ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+
+    li {
+      position: relative;
+      padding: 14px 16px 14px 46px;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--text);
+      border-radius: 12px;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      transform: translateX(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      animation: itemIn 0.6s ease both;
+    }
+
+    li:nth-child(2) { animation-delay: 0.12s; }
+    li:nth-child(3) { animation-delay: 0.24s; }
+    li::before { content: "✨"; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; transition: transform 0.25s ease; }
+    li:hover { transform: translateX(6px); background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 22px rgba(79, 70, 229, 0.14); }
+    body.theme-dark li:hover { background: rgba(30, 41, 59, 0.95); box-shadow: 0 12px 24px rgba(6, 182, 212, 0.16); }
+    li:hover::before { transform: translateY(-50%) scale(1.15) rotate(-8deg); }
+
+    .actions { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease, opacity 0.2s ease;
+    }
+    .btn:active { transform: translateY(0) scale(0.99); }
+    .generate-btn { color: var(--button-text); background: linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow: 0 12px 24px rgba(79, 70, 229, 0.24); }
+    .generate-btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 14px 28px rgba(79, 70, 229, 0.3); }
+    .copy-btn { color: var(--text); background: var(--item-bg); border: 1px solid var(--item-border); box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08); }
+    .copy-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(15, 23, 42, 0.14); }
+    .copy-btn.copied { background: linear-gradient(90deg, #10b981, #06b6d4); color: #f0fdf4; border-color: transparent; }
+    .btn.is-generating { animation: pulse 0.9s ease-in-out infinite; }
+    .idea-item-refresh { animation: refreshItem 0.45s ease; }
+
+    .hint {
+      margin-top: 8px;
+      min-height: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .hint.show { opacity: 1; transform: translateY(0); }
+
+    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes itemIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.34); } 70% { box-shadow: 0 0 0 14px rgba(79, 70, 229, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); } }
+    @keyframes refreshItem { 0% { opacity: 0.45; transform: translateY(8px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .container { padding: 20px 16px 18px; border-radius: 18px; min-height: calc(100vh - 24px); display: flex; flex-direction: column; }
+      .app-header { align-items: flex-start; gap: 10px; }
+      h1 { font-size: clamp(24px, 8.8vw, 32px); }
+      .subtitle { font-size: 15px; margin-bottom: 16px; }
+      li { font-size: 16px; padding: 13px 14px 13px 42px; }
+      .actions { margin-top: auto; padding-top: 16px; grid-template-columns: 1fr; }
+      .btn { padding: 14px 16px; border-radius: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="app-header">
+      <h1>Генератор идей для постов</h1>
+      <label class="theme-switch" for="themeToggle">
+        <span class="icon icon-sun" aria-hidden="true">☀️</span>
+        <input id="themeToggle" type="checkbox" aria-label="Переключить тему">
+        <span class="icon icon-moon" aria-hidden="true">🌙</span>
+      </label>
+    </header>
+    <p class="subtitle">Быстрые идеи, чтобы упростить планирование контента</p>
+    <ul id="ideasList">
+      <li>5 идей постов для экспертов</li>
+      <li>3 идеи сторис на сегодня</li>
+      <li>Контент-план на неделю</li>
+    </ul>
+    <div class="actions">
+      <button id="generateBtn" class="btn generate-btn" type="button">Сгенерировать идеи</button>
+      <button id="copyBtn" class="btn copy-btn" type="button">Скопировать идеи</button>
+    </div>
+    <p id="hint" class="hint" aria-live="polite"></p>
+  </main>
+  <script>
+    const ideaPools = [
+      ["5 идей постов для экспертов", "7 тем, чтобы показать вашу экспертность", "3 формата постов для вовлечения аудитории", "5 мини-кейсов для экспертного блога", "4 поста, которые повышают доверие к вам"],
+      ["3 идеи сторис на сегодня", "Сценарий из 4 сторис для прогрева", "2 интерактивные сторис с опросом", "3 сторис о закулисье вашей работы", "Сторис-план на день с призывом к диалогу"],
+      ["Контент-план на неделю", "План публикаций: 5 постов + 7 сторис", "Недельный контент-план по воронке", "Рубрикатор контента на 7 дней", "План на неделю с акцентом на продажи"]
+    ];
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const generateBtn = document.getElementById("generateBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const ideasList = document.getElementById("ideasList");
+    const hint = document.getElementById("hint");
+
+    const savedTheme = localStorage.getItem("ideas-theme");
+    if (savedTheme === "dark") {
+      body.classList.add("theme-dark");
+      themeToggle.checked = true;
+    }
+    themeToggle.addEventListener("change", () => {
+      body.classList.toggle("theme-dark", themeToggle.checked);
+      localStorage.setItem("ideas-theme", themeToggle.checked ? "dark" : "light");
+    });
+
+    function randomIdea(pool) {
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    function softVibrate() {
+      if ("vibrate" in navigator) navigator.vibrate([18, 22, 24]);
+    }
+    function showHint(message) {
+      hint.textContent = message;
+      hint.classList.add("show");
+      clearTimeout(showHint.timerId);
+      showHint.timerId = setTimeout(() => hint.classList.remove("show"), 1600);
+    }
+    function refreshIdeas() {
+      const items = ideasList.querySelectorAll("li");
+      items.forEach((item, index) => {
+        item.classList.remove("idea-item-refresh");
+        void item.offsetWidth;
+        item.textContent = randomIdea(ideaPools[index]);
+        item.classList.add("idea-item-refresh");
+      });
+    }
+    function getIdeasText() {
+      const items = [...ideasList.querySelectorAll("li")];
+      return items.map((item, idx) => `${idx + 1}. ${item.textContent}`).join("\n");
+    }
+
+    generateBtn.addEventListener("click", () => {
+      generateBtn.classList.add("is-generating");
+      generateBtn.disabled = true;
+      setTimeout(() => {
+        refreshIdeas();
+        softVibrate();
+        showHint("Идеи обновлены");
+        generateBtn.classList.remove("is-generating");
+        generateBtn.disabled = false;
+      }, 550);
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(getIdeasText());
+        copyBtn.classList.add("copied");
+        copyBtn.textContent = "Скопировано";
+        showHint("Список идей скопирован в буфер");
+      } catch (error) {
+        showHint("Не удалось скопировать");
+      } finally {
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.textContent = "Скопировать идеи";
+        }, 1200);
+      }
+    });
+  </script>
+</body>
+</html>
+*** End of File
+  <title>Генератор идей для постов</title>
+  <style>
+    :root {
+      --bg-1: #f3f7ff;
+      --bg-2: #edfdf7;
+      --bg-3: #fef3ff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #4f46e5;
+      --accent-2: #0ea5e9;
+      --card: rgba(255, 255, 255, 0.82);
+      --border: rgba(255, 255, 255, 0.6);
+      --item-bg: rgba(255, 255, 255, 0.78);
+      --item-border: rgba(148, 163, 184, 0.25);
+      --toggle-bg: rgba(15, 23, 42, 0.09);
+      --button-text: #ffffff;
+    }
+
+    body.theme-dark {
+      --bg-1: #0b1223;
+      --bg-2: #0f172a;
+      --bg-3: #1a1a3a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #818cf8;
+      --accent-2: #22d3ee;
+      --card: rgba(15, 23, 42, 0.75);
+      --border: rgba(148, 163, 184, 0.26);
+      --item-bg: rgba(30, 41, 59, 0.75);
+      --item-border: rgba(148, 163, 184, 0.24);
+      --toggle-bg: rgba(148, 163, 184, 0.2);
+      --button-text: #ecfeff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(-45deg, var(--bg-1), var(--bg-3), var(--bg-2), #e0f2fe);
+      background-size: 300% 300%;
+      animation: gradientMove 16s ease infinite;
+      transition: color 0.35s ease, background 0.35s ease;
+    }
+
+    .container {
+      width: min(760px, 100%);
+      padding: 34px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow:
+        0 12px 40px rgba(15, 23, 42, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.9s ease both;
+      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .theme-switch .icon {
+      font-size: 15px;
+      line-height: 1;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .theme-switch .icon-moon {
+      opacity: 0.55;
+    }
+
+    body.theme-dark .theme-switch .icon-sun {
+      opacity: 0.55;
+    }
+
+    body.theme-dark .theme-switch .icon-moon {
+      opacity: 1;
+      transform: rotate(12deg) scale(1.06);
+    }
+
+    .theme-switch input {
+      appearance: none;
+      width: 50px;
+      height: 30px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--toggle-bg);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      outline: none;
+    }
+
+    .theme-switch input::before {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      left: 4px;
+      top: 4px;
+      background: #fff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s ease;
+    }
+
+    .theme-switch input:checked {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .theme-switch input:checked::before {
+      transform: translateX(20px);
+    }
+
+    .subtitle {
+      margin: 0 0 22px;
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    li {
+      position: relative;
+      padding: 14px 16px 14px 46px;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--text);
+      border-radius: 12px;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      transform: translateX(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      animation: itemIn 0.6s ease both;
+    }
+
+    li:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    li:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+
+    li::before {
+      content: "✨";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      transition: transform 0.25s ease;
+    }
+
+    li:hover {
+      transform: translateX(6px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.14);
+    }
+
+    body.theme-dark li:hover {
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 12px 24px rgba(6, 182, 212, 0.16);
+    }
+
+    li:hover::before {
+      transform: translateY(-50%) scale(1.15) rotate(-8deg);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .generate-btn {
+      color: var(--button-text);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 24px rgba(79, 70, 229, 0.24);
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 28px rgba(79, 70, 229, 0.3);
+    }
+
+    .copy-btn {
+      color: var(--text);
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(15, 23, 42, 0.14);
+    }
+
+    .copy-btn.copied {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      color: #f0fdf4;
+      border-color: transparent;
+    }
+
+    .btn.is-generating {
+      animation: pulse 0.9s ease-in-out infinite;
+    }
+
+    .idea-item-refresh {
+      animation: refreshItem 0.45s ease;
+    }
+
+    .hint {
+      margin-top: 8px;
+      min-height: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes itemIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.34); }
+      70% { box-shadow: 0 0 0 14px rgba(79, 70, 229, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+    }
+
+    @keyframes refreshItem {
+      0% {
+        opacity: 0.45;
+        transform: translateY(8px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 20px 16px 18px;
+        border-radius: 18px;
+        min-height: calc(100vh - 24px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app-header {
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 8.8vw, 32px);
+      }
+
+      .subtitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+      }
+
+      li {
+        font-size: 16px;
+        padding: 13px 14px 13px 42px;
+      }
+
+      .actions {
+        margin-top: auto;
+        padding-top: 16px;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        padding: 14px 16px;
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="app-header">
+      <h1>Генератор идей для постов</h1>
+      <label class="theme-switch" for="themeToggle">
+        <span class="icon icon-sun" aria-hidden="true">☀️</span>
+        <input id="themeToggle" type="checkbox" aria-label="Переключить тему">
+        <span class="icon icon-moon" aria-hidden="true">🌙</span>
+      </label>
+    </header>
+
+    <p class="subtitle">Быстрые идеи, чтобы упростить планирование контента</p>
+
+    <ul id="ideasList">
+      <li>5 идей постов для экспертов</li>
+      <li>3 идеи сторис на сегодня</li>
+      <li>Контент-план на неделю</li>
+    </ul>
+
+    <div class="actions">
+      <button id="generateBtn" class="btn generate-btn" type="button">Сгенерировать идеи</button>
+      <button id="copyBtn" class="btn copy-btn" type="button">Скопировать идеи</button>
+    </div>
+    <p id="hint" class="hint" aria-live="polite"></p>
+  </main>
+
+  <script>
+    const ideaPools = [
+      [
+        "5 идей постов для экспертов",
+        "7 тем, чтобы показать вашу экспертность",
+        "3 формата постов для вовлечения аудитории",
+        "5 мини-кейсов для экспертного блога",
+        "4 поста, которые повышают доверие к вам"
+      ],
+      [
+        "3 идеи сторис на сегодня",
+        "Сценарий из 4 сторис для прогрева",
+        "2 интерактивные сторис с опросом",
+        "3 сторис о закулисье вашей работы",
+        "Сторис-план на день с призывом к диалогу"
+      ],
+      [
+        "Контент-план на неделю",
+        "План публикаций: 5 постов + 7 сторис",
+        "Недельный контент-план по воронке",
+        "Рубрикатор контента на 7 дней",
+        "План на неделю с акцентом на продажи"
+      ]
+    ];
+
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const generateBtn = document.getElementById("generateBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const ideasList = document.getElementById("ideasList");
+    const hint = document.getElementById("hint");
+
+    const savedTheme = localStorage.getItem("ideas-theme");
+    if (savedTheme === "dark") {
+      body.classList.add("theme-dark");
+      themeToggle.checked = true;
+    }
+
+    themeToggle.addEventListener("change", () => {
+      body.classList.toggle("theme-dark", themeToggle.checked);
+      localStorage.setItem("ideas-theme", themeToggle.checked ? "dark" : "light");
+    });
+
+    function randomIdea(pool) {
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function softVibrate() {
+      if ("vibrate" in navigator) {
+        navigator.vibrate([18, 22, 24]);
+      }
+    }
+
+    function showHint(message) {
+      hint.textContent = message;
+      hint.classList.add("show");
+      clearTimeout(showHint.timerId);
+      showHint.timerId = setTimeout(() => {
+        hint.classList.remove("show");
+      }, 1600);
+    }
+
+    function refreshIdeas() {
+      const items = ideasList.querySelectorAll("li");
+      items.forEach((item, index) => {
+        item.classList.remove("idea-item-refresh");
+        void item.offsetWidth;
+        item.textContent = randomIdea(ideaPools[index]);
+        item.classList.add("idea-item-refresh");
+      });
+    }
+
+    function getIdeasText() {
+      const items = [...ideasList.querySelectorAll("li")];
+      return items.map((item, idx) => `${idx + 1}. ${item.textContent}`).join("\n");
+    }
+
+    generateBtn.addEventListener("click", () => {
+      generateBtn.classList.add("is-generating");
+      generateBtn.disabled = true;
+
+      setTimeout(() => {
+        refreshIdeas();
+        softVibrate();
+        showHint("Идеи обновлены");
+        generateBtn.classList.remove("is-generating");
+        generateBtn.disabled = false;
+      }, 550);
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(getIdeasText());
+        copyBtn.classList.add("copied");
+        copyBtn.textContent = "Скопировано";
+        showHint("Список идей скопирован в буфер");
+      } catch (error) {
+        showHint("Не удалось скопировать");
+      } finally {
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.textContent = "Скопировать идеи";
+        }, 1200);
+      }
+    });
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор идей для постов</title>
+  <style>
+    :root {
+      --bg-1: #f3f7ff;
+      --bg-2: #edfdf7;
+      --bg-3: #fef3ff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #4f46e5;
+      --accent-2: #0ea5e9;
+      --card: rgba(255, 255, 255, 0.82);
+      --border: rgba(255, 255, 255, 0.6);
+      --item-bg: rgba(255, 255, 255, 0.78);
+      --item-border: rgba(148, 163, 184, 0.25);
+      --toggle-bg: rgba(15, 23, 42, 0.09);
+      --button-text: #ffffff;
+    }
+
+    body.theme-dark {
+      --bg-1: #0b1223;
+      --bg-2: #0f172a;
+      --bg-3: #1a1a3a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #818cf8;
+      --accent-2: #22d3ee;
+      --card: rgba(15, 23, 42, 0.75);
+      --border: rgba(148, 163, 184, 0.26);
+      --item-bg: rgba(30, 41, 59, 0.75);
+      --item-border: rgba(148, 163, 184, 0.24);
+      --toggle-bg: rgba(148, 163, 184, 0.2);
+      --button-text: #ecfeff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(-45deg, var(--bg-1), var(--bg-3), var(--bg-2), #e0f2fe);
+      background-size: 300% 300%;
+      animation: gradientMove 16s ease infinite;
+      transition: color 0.35s ease, background 0.35s ease;
+    }
+
+    .container {
+      width: min(760px, 100%);
+      padding: 34px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow:
+        0 12px 40px rgba(15, 23, 42, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.9s ease both;
+      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .theme-switch input {
+      appearance: none;
+      width: 50px;
+      height: 30px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--toggle-bg);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      outline: none;
+    }
+
+    .theme-switch input::before {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      left: 4px;
+      top: 4px;
+      background: #fff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s ease;
+    }
+
+    .theme-switch input:checked {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .theme-switch input:checked::before {
+      transform: translateX(20px);
+    }
+
+    .subtitle {
+      margin: 0 0 22px;
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    li {
+      position: relative;
+      padding: 14px 16px 14px 46px;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--text);
+      border-radius: 12px;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      transform: translateX(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      animation: itemIn 0.6s ease both;
+    }
+
+    li:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    li:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+
+    li::before {
+      content: "✨";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      transition: transform 0.25s ease;
+    }
+
+    li:hover {
+      transform: translateX(6px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.14);
+    }
+
+    body.theme-dark li:hover {
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 12px 24px rgba(6, 182, 212, 0.16);
+    }
+
+    li:hover::before {
+      transform: translateY(-50%) scale(1.15) rotate(-8deg);
+    }
+
+    .actions {
+      margin-top: 22px;
+    }
+
+    .generate-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 15px 18px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--button-text);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(79, 70, 229, 0.24);
+      transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 28px rgba(79, 70, 229, 0.3);
+    }
+
+    .generate-btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .generate-btn.is-generating {
+      animation: pulse 0.9s ease-in-out infinite;
+    }
+
+    .idea-item-refresh {
+      animation: refreshItem 0.45s ease;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes itemIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.34); }
+      70% { box-shadow: 0 0 0 14px rgba(79, 70, 229, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+    }
+
+    @keyframes refreshItem {
+      0% {
+        opacity: 0.45;
+        transform: translateY(8px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 20px 16px 18px;
+        border-radius: 18px;
+        min-height: calc(100vh - 24px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app-header {
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 8.8vw, 32px);
+      }
+
+      .subtitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+      }
+
+      li {
+        font-size: 16px;
+        padding: 13px 14px 13px 42px;
+      }
+
+      .actions {
+        margin-top: auto;
+        padding-top: 16px;
+      }
+
+      .generate-btn {
+        padding: 14px 16px;
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="app-header">
+      <h1>Генератор идей для постов</h1>
+      <label class="theme-switch" for="themeToggle">
+        <span>Тема</span>
+        <input id="themeToggle" type="checkbox" aria-label="Переключить тему">
+      </label>
+    </header>
+
+    <p class="subtitle">Быстрые идеи, чтобы упростить планирование контента</p>
+
+    <ul id="ideasList">
+      <li>5 идей постов для экспертов</li>
+      <li>3 идеи сторис на сегодня</li>
+      <li>Контент-план на неделю</li>
+    </ul>
+
+    <div class="actions">
+      <button id="generateBtn" class="generate-btn" type="button">Сгенерировать идеи</button>
+    </div>
+  </main>
+
+  <script>
+    const ideaPools = [
+      [
+        "5 идей постов для экспертов",
+        "7 тем, чтобы показать вашу экспертность",
+        "3 формата постов для вовлечения аудитории",
+        "5 мини-кейсов для экспертного блога",
+        "4 поста, которые повышают доверие к вам"
+      ],
+      [
+        "3 идеи сторис на сегодня",
+        "Сценарий из 4 сторис для прогрева",
+        "2 интерактивные сторис с опросом",
+        "3 сторис о закулисье вашей работы",
+        "Сторис-план на день с призывом к диалогу"
+      ],
+      [
+        "Контент-план на неделю",
+        "План публикаций: 5 постов + 7 сторис",
+        "Недельный контент-план по воронке",
+        "Рубрикатор контента на 7 дней",
+        "План на неделю с акцентом на продажи"
+      ]
+    ];
+
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const generateBtn = document.getElementById("generateBtn");
+    const ideasList = document.getElementById("ideasList");
+
+    const savedTheme = localStorage.getItem("ideas-theme");
+    if (savedTheme === "dark") {
+      body.classList.add("theme-dark");
+      themeToggle.checked = true;
+    }
+
+    themeToggle.addEventListener("change", () => {
+      body.classList.toggle("theme-dark", themeToggle.checked);
+      localStorage.setItem("ideas-theme", themeToggle.checked ? "dark" : "light");
+    });
+
+    function randomIdea(pool) {
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function refreshIdeas() {
+      const items = ideasList.querySelectorAll("li");
+      items.forEach((item, index) => {
+        item.classList.remove("idea-item-refresh");
+        void item.offsetWidth;
+        item.textContent = randomIdea(ideaPools[index]);
+        item.classList.add("idea-item-refresh");
+      });
+    }
+
+    generateBtn.addEventListener("click", () => {
+      generateBtn.classList.add("is-generating");
+      generateBtn.disabled = true;
+
+      setTimeout(() => {
+        refreshIdeas();
+        generateBtn.classList.remove("is-generating");
+        generateBtn.disabled = false;
+      }, 550);
+    });
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор идей для постов</title>
+  <style>
+    :root {
+      --bg-1: #f3f7ff;
+      --bg-2: #edfdf7;
       --text: #0f172a;
       --muted: #475569;
       --accent: #4f46e5;
